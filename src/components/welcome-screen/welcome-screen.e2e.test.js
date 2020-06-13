@@ -7,16 +7,18 @@ Enzyme.configure({
   adapter: new Adapter()
 });
 
-it(`Welcome button should be pressed`, () => {
-  const onWelcomeButtonClick = jest.fn();
+describe(`WelcomeScreen`, () => {
+  it(`Welcome button should be pressed`, () => {
+    const onWelcomeButtonClick = jest.fn();
 
-  const welcomeScreen = shallow(
-      <WelcomeScreen errorsCount={3} onWelcomeButtonClick={onWelcomeButtonClick}/>
-  );
+    const welcomeScreen = shallow(
+        <WelcomeScreen errorsCount={3} onWelcomeButtonClick={onWelcomeButtonClick}/>
+    );
 
-  const welcomeButton = welcomeScreen.find(`button.welcome__button`);
+    const welcomeButton = welcomeScreen.find(`button.welcome__button`);
 
-  welcomeButton.simulate(`click`);
+    welcomeButton.simulate(`click`);
 
-  expect(onWelcomeButtonClick).toHaveBeenCalledTimes(1);
+    expect(onWelcomeButtonClick).toHaveBeenCalledTimes(1);
+  });
 });
