@@ -46,6 +46,14 @@ export default class GenreQuestionScreen extends PureComponent {
           >
 
             {answers.map((answer, index) => {
+              const handlerInputChange = (evt) => {
+                const value = evt.target.checked;
+
+                this.setState({
+                  answers: [...userAnswers.slice(0, index), value, ...userAnswers.slice(index + 1)]
+                });
+              };
+
               return (
                 <div className="track" key={`${answer.src}-${index}`}>
                   <button className="track__button track__button--play" type="button"></button>
@@ -60,13 +68,7 @@ export default class GenreQuestionScreen extends PureComponent {
                       value={`answer-${index}`}
                       id={`answer-${index}`}
                       checked={userAnswers[index]}
-                      onChange={(evt) => {
-                        const value = evt.target.checked;
-
-                        this.setState({
-                          answers: [...userAnswers.slice(0, index), value, ...userAnswers.slice(index + 1)]
-                        });
-                      }} />
+                      onChange={handlerInputChange} />
                     <label className="game__check" htmlFor={`answer-${index}`}>Отметить</label>
                   </div>
                 </div>
