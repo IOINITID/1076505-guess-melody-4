@@ -24,7 +24,7 @@ const withActivePlayer = (Component) => {
                 isPlaying={id === activePlayerId}
                 onPlayButtonClick={() => {
                   this.setState({
-                    activePlayerId: activePlayerId === id ? -1 : id
+                    activePlayerId: activePlayerId === id ? null : id
                   });
                 }}
               />
