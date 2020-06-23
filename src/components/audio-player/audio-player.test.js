@@ -15,6 +15,7 @@ describe(`AudioPlayer`, () => {
     const tree = rerender.create(
         <AudioPlayer
           isPlaying={false}
+          onPlayButtonClick={() => {}}
           src={song.src}
         />, {
           createNodeMock: () => {

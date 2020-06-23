@@ -8,13 +8,14 @@ export default class GenreQuestionScreen extends PureComponent {
     super(props);
 
     this.state = {
+      activePlayer: 0,
       answers: [false, false, false, false]
     };
   }
 
   render() {
     const {onAnswer, question} = this.props;
-    const {answers: userAnswers} = this.state;
+    const {answers: userAnswers, activePlayer} = this.state;
     const {answers, genre} = question;
 
     return (
@@ -42,7 +43,12 @@ export default class GenreQuestionScreen extends PureComponent {
                 <button className="track__button track__button--play" type="button"></button>
                 <div className="track__status">
                   <AudioPlayer
-                    isPlaying={index === 0}
+                    onPlayButtonClick={() => {
+                      this.setState({
+                        activePlayer: activePlayer === index ? -1 : 1,
+                      });
+                    }}
+                    isPlaying={index === activePlayer}
                     src={answer.src}
                   />
                 </div>
