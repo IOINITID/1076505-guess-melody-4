@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {GameType} from '../../const.js';
+import AudioPlayer from '../audio-player/audio-player.jsx';
 
 export default class GenreQuestionScreen extends PureComponent {
   constructor(props) {
@@ -40,7 +41,10 @@ export default class GenreQuestionScreen extends PureComponent {
               <div className="track" key={`${answer.src}-${index}`}>
                 <button className="track__button track__button--play" type="button"></button>
                 <div className="track__status">
-                  <audio src={answer.src}></audio>
+                  <AudioPlayer
+                    isPlaying={index === 0}
+                    src={answer.src}
+                  />
                 </div>
                 <div className="game__answer">
                   <input
