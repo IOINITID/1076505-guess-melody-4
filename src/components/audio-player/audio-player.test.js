@@ -16,7 +16,11 @@ describe(`AudioPlayer`, () => {
         <AudioPlayer
           isPlaying={false}
           src={song.src}
-        />
+        />, {
+          createNodeMock: () => {
+            return {};
+          }
+        }
     ).toJSON();
 
     expect(tree).toMatchSnapshot();

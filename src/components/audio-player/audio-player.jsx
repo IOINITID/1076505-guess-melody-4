@@ -1,4 +1,4 @@
-import React, {PureComponent, Fragment} from 'react';
+import React, {PureComponent, Fragment, createRef} from 'react';
 import PropTypes from 'prop-types';
 
 export default class AudioPlayer extends PureComponent {
@@ -10,45 +10,49 @@ export default class AudioPlayer extends PureComponent {
       isLoading: true,
       isPlaying: props.isPlaying
     };
+
+    this._audioRef = createRef();
   }
 
   componentDidMount() {
     const {src} = this.props;
+    const audio = this._audioRef.current;
 
-    this._audio = new Audio(src);
+    audio.src = src;
 
-    this._audio.oncanplaythrough = () => {
+    audio.oncanplaythrough = () => {
       this.setState({
         isLoading: false
       });
     };
 
-    this._audio.onplay = () => {
+    audio.onplay = () => {
       this.setState({
         isPlaying: true
       });
     };
 
-    this._audio.onpause = () => {
+    audio.onpause = () => {
       this.setState({
         isPlaying: false
       });
     };
 
-    this._audio.ontimeupdate = () => {
+    audio.ontimeupdate = () => {
       this.setState({
-        progress: this._audio.currentTime
+        progress: audio.currentTime
       });
     };
   }
 
   componentWillUnmount() {
-    this._audio.oncanplaythrough = null;
-    this._audio.onplay = null;
-    this._audio.onpause = null;
-    this._audio.ontimeupdate = null;
-    this._audio.src = null;
-    this._audio = null;
+    const audio = this._audioRef.current;
+
+    audio.oncanplaythrough = null;
+    audio.onplay = null;
+    audio.onpause = null;
+    audio.ontimeupdate = null;
+    audio.src = ``;
   }
 
   render() {
@@ -63,17 +67,19 @@ export default class AudioPlayer extends PureComponent {
           onClick={() => this.setState({isPlaying: !this.state.isPlaying})}
         />
         <div className="track__status">
-          <audio />
+          <audio ref={this._audioRef}/>
         </div>
       </Fragment>
     );
   }
 
   componentDidUpdate() {
+    const audio = this._audioRef.current;
+
     if (this.state.isPlaying) {
-      this._audio.play();
+      audio.play();
     } else {
-      this._audio.pause();
+      audio.pause();
     }
   }
 }
