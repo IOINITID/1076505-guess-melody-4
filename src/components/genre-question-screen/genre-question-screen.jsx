@@ -1,21 +1,19 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {GameType} from '../../const.js';
-import AudioPlayer from '../audio-player/audio-player.jsx';
 
 export default class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      activePlayer: 0,
       answers: [false, false, false, false]
     };
   }
 
   render() {
-    const {onAnswer, question} = this.props;
-    const {answers: userAnswers, activePlayer} = this.state;
+    const {onAnswer, question, renderPlayer} = this.props;
+    const {answers: userAnswers} = this.state;
     const {answers, genre} = question;
 
     return (
@@ -40,18 +38,7 @@ export default class GenreQuestionScreen extends PureComponent {
 
             return (
               <div className="track" key={`${answer.src}-${index}`}>
-                <button className="track__button track__button--play" type="button"></button>
-                <div className="track__status">
-                  <AudioPlayer
-                    onPlayButtonClick={() => {
-                      this.setState({
-                        activePlayer: activePlayer === index ? -1 : 1,
-                      });
-                    }}
-                    isPlaying={index === activePlayer}
-                    src={answer.src}
-                  />
-                </div>
+                {renderPlayer(answer.src, index)}
                 <div className="game__answer">
                   <input
                     className="game__input visually-hidden"
@@ -83,5 +70,6 @@ GenreQuestionScreen.propTypes = {
       src: PropTypes.string.isRequired,
       genre: PropTypes.string.isRequired
     })).isRequired,
-  }).isRequired
+  }).isRequired,
+  renderPlayer: PropTypes.func.isRequired
 };

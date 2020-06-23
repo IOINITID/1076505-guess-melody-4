@@ -38,6 +38,7 @@ describe(`GenreQuestionScreen`, () => {
         <GenreQuestionScreen
           onAnswer={onAnswer}
           question={question}
+          renderPlayer={() => {}}
         />
     );
     const form = genreQuestionScreen.find(`form`);
@@ -59,6 +60,7 @@ describe(`GenreQuestionScreen`, () => {
         <GenreQuestionScreen
           onAnswer={onAnswer}
           question={question}
+          renderPlayer={() => {}}
         />
     );
     const form = genreQuestionScreen.find(`form`);
